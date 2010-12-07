@@ -44,24 +44,19 @@ rm(list=ls(envir=.blotter),envir=.blotter)
 ltportfolio='3days'
 ltaccount='3days'
 initPortf(ltportfolio,symbols, initDate=initDate)
-#initPortf(shportfolio,symbols, initDate=initDate)
 initAcct(ltaccount,portfolios=c(ltportfolio), initDate=initDate,initEq=initEq)
 currency("USD")
 stock(symbol,currency="USD",multiplier=1)
 
 signal[is.na(signal)]<-0
 
-#tmp<-ifelse(SMA(Cl(SPY))<Cl(SPY),1,0)
-#tmp[is.na(tmp)]<-0
-#signal<-signal*tmp
 
 counter<-0
 
-for(i in 10:length(signal))
+for(i in 2:length(signal))
 {
 	currentDate= time(signal)[i]
 	equity = 10000 #getEndEq(ltaccount, currentDate)
-	#print(paste("equity ",equity))
 	position = getPosQty(ltportfolio, Symbol=symbols[1], Date=currentDate)	
 	print(position)
 	print(currentDate)
@@ -86,7 +81,6 @@ for(i in 10:length(signal))
 		#position is open. If signal is 0 - close it.
 		if(position>0 &counter>=1)
 		{
-			print('close position>>>>')
 			position = getPosQty(ltportfolio, Symbol=symbols[1], Date=currentDate)
 			closePrice<-as.double((Cl(SPY[currentDate])))#as.double(get(symbols[1])[i+100])
 			commssions=-position*closePrice*0.0003
@@ -99,13 +93,9 @@ for(i in 10:length(signal))
 			counter<-counter+1
 		}
 	}	
-	#print(equity)
 	updatePortf(ltportfolio, Dates = currentDate)
 	updateAcct(ltaccount, Dates = currentDate)
 	updateEndEq(ltaccount, Dates = currentDate)
-	
-	#equity = getEndEq(ltaccount, currentDate)
-	#print(paste("equity ",equity))
 }
 rez1<-(getPortfolio(ltaccount))
 plot(cumsum(rez1$symbols$SPY$txn[,9]))
@@ -117,5 +107,5 @@ result<-result[result!=0]
 #fix commission rate 2*3
 plot(cumsum(result-6))
 
-#chart.CumReturns(cbind((result)/10000,(result-6)/10000))
+chart.CumReturns(cbind((result)/10000,(result-6)/10000))
 

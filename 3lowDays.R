@@ -70,7 +70,7 @@ for(i in 2:length(signal))
 			print(closePrice)
 			unitSize = as.numeric(trunc((equity/closePrice)))
 			print(unitSize)
-			commssions=unitSize*closePrice*0.0003
+			commssions=-unitSize*closePrice*0.0003
 			addTxn(ltportfolio, Symbol=symbols[1],  TxnDate=currentDate, TxnPrice=closePrice, TxnQty = unitSize , TxnFees=commssions, verbose=T)
 			counter<-1
 		}

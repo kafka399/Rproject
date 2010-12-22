@@ -37,7 +37,7 @@ tmp<-(Hi(lag2)/Lo(SPY)-1)*signal
 
 #blotter code
 symbols<-c('SPY')
-
+SPY<-Cl(SPY)
 initDate=time(get(symbols)[1])
 initEq=10000
 rm(list=ls(envir=.blotter),envir=.blotter)

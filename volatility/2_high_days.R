@@ -1,4 +1,7 @@
-
+#If during the last two days VIX return was above 6%, then there is high probability, that return of S&P500 index will be positive on third day 
+#author Dzidorius Martinaitis
+#2010-12-29
+# http://www.investuotojas.eu/?p=439
 require('xts')
 require('quantmod')
 require('blotter')

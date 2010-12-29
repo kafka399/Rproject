@@ -1,3 +1,6 @@
+#Description: http://www.investuotojas.eu/?p=409
+# author: Dzidorius Martinaitis
+
 require('xts')
 require('quantmod')
 require('blotter')

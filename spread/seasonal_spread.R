@@ -1,3 +1,7 @@
+#Author: Dzidorius Martinaitis
+#Date: 2011-01-11
+#Description: http://www.investuotojas.eu/?p=447
+
 require('xts')
 require('quantmod')
 Sys.setenv(TZ="GMT")

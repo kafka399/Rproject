@@ -47,8 +47,8 @@ summary(lm(as.double(spread)~(spread.factor)))
 
 
 
-rb.delta.monthly<-Delt(Cl(to.monthly(rb)))['1997-01::']
-cl.delta.monthly<-Delt(Cl(to.monthly(cl)))['1997-01::']
+rb.delta.monthly<-Delt(Cl(to.monthly(rb,indexAt='endof')))['1997-01::']
+cl.delta.monthly<-Delt(Cl(to.monthly(cl,indexAt='endof')))['1997-01::']
 
 rb.delta.monthly[is.na(rb.delta.monthly)]<-0
 cl.delta.monthly[is.na(cl.delta.monthly)]<-0

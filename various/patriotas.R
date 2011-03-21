@@ -1,4 +1,6 @@
-#
+# result: http://dl.dropbox.com/u/6360678/Rproject_data/patriotai.png
+#@Autor Dzidorius Martinaitis
+#@Date 2011-03-21
 library(RColorBrewer)
 library(sp)
 #http://gadm.org/data/rda/LTU_adm1.RData

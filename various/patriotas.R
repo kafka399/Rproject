@@ -1,6 +1,8 @@
+#
 library(RColorBrewer)
 library(sp)
 #http://gadm.org/data/rda/LTU_adm1.RData
+#getData("GADM",country='LTU',level=2)#<-doesn't work on my machine
 load(file='~/tickers/LTU_adm2.RData')
 
 patriotas<-tail(read.table('http://dl.dropbox.com/u/6360678/Rproject_data/patriotas.csv',sep=',',header=T),-1)

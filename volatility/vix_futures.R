@@ -53,7 +53,7 @@ ltaccount='volatility'
 initPortf(ltportfolio,symbols, initDate=initDate)
 initAcct(ltaccount,portfolios=c(ltportfolio), initDate=initDate,initEq=initEq)
 currency("USD")
-stock(symbols[1],currency="USD")
+futures(symbols[1],currency="USD",1000,0.01)
 
 signal<-signal[index(vix)]
 		
@@ -76,10 +76,10 @@ for(i in 2:length(signal))
 			print('open position')
 			closePrice<-as.double(get(symbols[1])[currentDate])
 			print(closePrice)
-			unitSize = as.numeric(trunc((equity/closePrice)))
+			unitSize = 1#as.numeric(trunc((equity/closePrice)))
 			print(unitSize)
-			commssions=-unitSize*closePrice*0.0003
-			addTxn(ltportfolio, Symbol=symbols[1],  TxnDate=currentDate, TxnPrice=closePrice, TxnQty = unitSize , TxnFees=commssions, verbose=T)
+			commssions=-2#unitSize*closePrice*0.0003
+			addTxn(ltportfolio, Symbol=symbols[1],  TxnDate=currentDate, TxnPrice=closePrice-0.02, TxnQty = -unitSize , TxnFees=commssions, verbose=T)
 			counter<-1
 		}
 		
@@ -87,12 +87,12 @@ for(i in 2:length(signal))
 	else
 	{
 		#position is open. If signal is 0 - close it.
-		if(position>0 & as.integer(signal[i])==0 &counter>=3)
+		if(position!=0 & as.integer(signal[i])==0 &counter>=3)
 		{
 			position = getPosQty(ltportfolio, Symbol=symbols[1], Date=currentDate)
 			closePrice<-as.double(get(symbols[1])[currentDate])#as.double(get(symbols[1])[i+100])
-			commssions=-position*closePrice*0.0003
-			addTxn(ltportfolio, Symbol=symbols[1],  TxnDate=currentDate, TxnPrice=closePrice, TxnQty = -position , TxnFees=commssions, verbose=T)
+			commssions=-2#position*closePrice*0.0003
+			addTxn(ltportfolio, Symbol=symbols[1],  TxnDate=currentDate, TxnPrice=closePrice+0.02, TxnQty = -position , TxnFees=commssions, verbose=T)
 			counter<-0
 		}
 		else
@@ -116,8 +116,6 @@ dev.off()
 #----------------results end------------------------
 
 ###################################################################################################
-
-#-------------------data preparation, merge with VXX ETF-----------------
 
 signal<-ifelse(past.vol<0.25,1,0)
 #signal<-signal[index(es)]

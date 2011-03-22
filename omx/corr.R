@@ -1,3 +1,7 @@
+#@Author: Dzidorius Martinaitis
+#@Date: 2011-03-22
+#@Description: http://www.investuotojas.eu/?p=464
+
 require(xts)
 require(quantmod)
 require(igraph)

@@ -53,9 +53,9 @@ ltaccount='volatility'
 initPortf(ltportfolio,symbols, initDate=initDate)
 initAcct(ltaccount,portfolios=c(ltportfolio), initDate=initDate,initEq=initEq)
 currency("USD")
-futures(symbols[1],currency="USD",1000,0.01)
+future(symbols[1],currency="USD",1000,0.01)
 
-signal<-signal[index(vix)]
+#signal<-signal[index(vix)]
 		
 signal[is.na(signal)]<-0
 
@@ -79,15 +79,15 @@ for(i in 2:length(signal))
 			unitSize = 1#as.numeric(trunc((equity/closePrice)))
 			print(unitSize)
 			commssions=-2#unitSize*closePrice*0.0003
-			addTxn(ltportfolio, Symbol=symbols[1],  TxnDate=currentDate, TxnPrice=closePrice-0.02, TxnQty = -unitSize , TxnFees=commssions, verbose=T)
-			counter<-1
+			addTxn(ltportfolio, Symbol=symbols[1],  TxnDate=currentDate, TxnPrice=closePrice-0.02, TxnQty = unitSize , TxnFees=commssions, verbose=T)
+			counter=1
 		}
 		
 	}
 	else
 	{
 		#position is open. If signal is 0 - close it.
-		if(position!=0 & as.integer(signal[i])==0 &counter>=3)
+		if(position!=0 & as.integer(signal[i])==0 &counter>=10)
 		{
 			position = getPosQty(ltportfolio, Symbol=symbols[1], Date=currentDate)
 			closePrice<-as.double(get(symbols[1])[currentDate])#as.double(get(symbols[1])[i+100])
@@ -99,7 +99,7 @@ for(i in 2:length(signal))
 			counter<-counter+1
 		
 	}	
-	print('>>>>>>>>>>>>')
+	print(paste('>>>>>>>>>>>>',counter))
 	updatePortf(ltportfolio, Dates = currentDate)
 	updateAcct(ltaccount, Dates = currentDate)
 	updateEndEq(ltaccount, Dates = currentDate)

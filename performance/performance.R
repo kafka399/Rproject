@@ -40,8 +40,9 @@ library(Rcpp)
 ###########    pure C++  #################
 
 code='
-NumericVector bid(bid_);NumericVector ask(ask_);NumericVector close(close_);NumericVector ret(ask_);
+NumericVector bid(bid_);NumericVector ask(ask_);NumericVector close(close_);
 int bid_size = bid.size();
+NumericVector ret(bid_size);
 for(int i =0;i<bid_size;i++)
 {
   if(close[i]>0)

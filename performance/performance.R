@@ -81,9 +81,9 @@ answ=append(answ,system.time(
 
 ###########    vectorized C++  #################
 code='
-NumericVector bid(bid_);NumericVector ask(ask_);NumericVector close(close_);NumericVector ret(ask_);
+NumericVector bid(bid_);NumericVector ask(ask_);NumericVector close(close_);
 int bid_size = bid.size();
-ret=ifelse(close>0,ifelse(bid >close, bid, ifelse(ask > 0,ifelse(ask < close,ask, close),close)), 0.5*(ask + bid));
+NumericVector ret=ifelse(close>0,ifelse(bid >close, bid, ifelse(ask > 0,ifelse(ask < close,ask, close),close)), 0.5*(ask + bid));
 return ret;
 '
 getLastPrice <- cxxfunction(signature( bid_ = "numeric",ask_ = "numeric",close_="numeric"),body=code,plugin="Rcpp")

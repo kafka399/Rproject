@@ -32,6 +32,25 @@ rez[!lgt0] = (x$ask[!lgt0]+x$bid[!lgt0])/2
 )[1])
 ###########   end vectorized R  #################
 
+########### Louis optimized R code ################
+answ=append(answ,system.time(
+{
+  rez = vector(mode="numeric", nrow(x))
+  lgt0 = x$last_price > 0
+  bgtl = x$bid > x$last_price
+  agt0 = x$ask > 0
+  altl = x$ask > x$last_price
+  rez = x$last_price
+  xx <- which(lgt0 & agt0 & altl)
+  rez[xx] = x$ask[xx]
+  xx <- which(lgt0 & bgtl)
+  rez[xx] = x$bid[xx]
+  xx <- which(!lgt0)
+  rez[xx] = (x$ask[xx]+x$bid[xx])/2
+}
+)[1])
+########### Louis optimized R code ################
+
 #C++ code starts here
 
 library(inline)
@@ -98,8 +117,8 @@ answ=append(answ,system.time(
 ###########   end vectorized C++  #################
 
 #summary(rez)
-names(answ)=c('ifelse R','vectorized R','pure C++','vectorized C++')
+names(answ)=c('ifelse R','vectorized R','Louis R','pure C++','vectorized C++')
 
 library(ggplot2)
-a=data.frame(ind=1:4,val=answ)
-ggplot(a,aes(ind,val))+geom_point(legend=F)+geom_text(aes(label=names(answ),hjust=c(-0.2,-0.2,-0.2,0.8),vjust=c(0,0,0,-1)),size=4)
+a=data.frame(ind=1:5,val=answ)
+ggplot(a,aes(ind,val))+geom_point(legend=F)+geom_text(aes(label=names(answ),hjust=c(-0.2,-0.2,-0.2,-0.2,0.8),vjust=c(0,0,0,0,-1)),size=4)

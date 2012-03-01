@@ -1,6 +1,6 @@
 #Author Dzidorius Martinaitis
 #Date 2012-03-01
-#Description 
+#Description http://www.investuotojas.eu/2012/03/01/i-see-high-frequency-data/
 
 require(rmongodb)
 require(xts)
@@ -86,7 +86,7 @@ quotes[,2]=na.locf(quotes[,2])
 quotes[,3]=na.locf(quotes[,3])
 quotes[which(is.na(quotes[,4])),3]=NA
 
-temp=tail(head(quotes,3000),1000)
+temp=tail(head(quotes,3000),400)
 temp=data.frame(ind=1:NROW(temp),trd=as.numeric(temp[,3])                
                 ,bid=as.numeric(temp[,1]),ask=as.numeric(temp[,2])
                 ,size=as.numeric(temp[,4])
